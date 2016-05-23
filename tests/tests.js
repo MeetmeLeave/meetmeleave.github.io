@@ -1,12 +1,5 @@
 var assert = chai.assert;
 
-/*describe("pow", function () {
-    it("raised to n‐th power", function () {
-        assert.equal(pow(2, 3), 8);
-    });
-});*/
-
-
 describe("Noise generation", function () {
     it("Returnes same noise value for predefined seed", function () {
         var p = new Perlin();
