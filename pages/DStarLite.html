@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>D* Lite</title>
+    <script src="../src/util/Heuristic.js"></script>
+    <script src="../src/datastructures/BinaryHeap.js"></script>
+    <script src="../src/pathfinding/dStarLite.js"></script>
+    <script src="../src/pathfinding/recursiveMazeSolver.js"></script>
+</head>
+
+<body>
+    <canvas id="c" width="700" height="700"></canvas>
+</body>
+
+<script>
+    var canvas = document.getElementById("c");
+    var mz = new Maze(10, 10, 0.3, 1, true);
+    var dst = new DStarLite(mz, true, false, new Heuristic(), N_DIRECTIONS_WITHOUT_DIAGONALS);
+    dst.solve();
+    mz.drawMazeOnCanvas(canvas);
+    solveMaze();
+</script>
+
+</html>

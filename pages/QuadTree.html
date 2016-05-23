@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../src/datastructures/QuadTree/QuadTree.js"></script>
+</head>
+
+<body>
+    <canvas id="c" width="1200" height="1200"></canvas>
+
+    <script>
+        // Demo page, to show visually how the tree works.
+        var canvas = document.getElementById("c");
+        var bounds = new Bounds(0,0,500,500);
+        var tree = new QuadTree(0, bounds);
+        
+        for(let i=0; i < 100; i++){
+            let element = new Bounds( Math.floor((Math.random() * 400) + 1), Math.floor((Math.random() * 400) + 1),10,10,i);
+            tree.insert(element);        
+        }
+        
+        tree.drawTree(canvas);
+    </script>
+</body>
+
+</html>
