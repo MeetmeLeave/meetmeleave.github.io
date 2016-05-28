@@ -30,7 +30,7 @@ function Maze(w, h, probability_to_block_a_cell, max_cost, fix_start_and_goal) {
         this.cells[y] = [];
         for (let x = 0; x < w; x++) {
             let blocked = (Math.random() < probability_to_block_a_cell);
-            let cost = Math.floor((Math.random() * max_cost) + 1);//random.nextInt(max_cost) + 1;
+            let cost = Math.floor((Math.random() * max_cost) + 1);
 
             this.cells[y][x] = new MazeCell(x, y, cost);
             if (blocked)
@@ -44,8 +44,8 @@ function Maze(w, h, probability_to_block_a_cell, max_cost, fix_start_and_goal) {
         x = this.w - 1;
         y = this.h - 1;
     } else {
-        x = Math.floor((Math.random() * w));//random.nextInt(w);
-        y = Math.floor((Math.random() * h));//random.nextInt(h);
+        x = Math.floor((Math.random() * w));
+        y = Math.floor((Math.random() * h));
     }
     this.setStart(x, y);
 
@@ -56,38 +56,15 @@ function Maze(w, h, probability_to_block_a_cell, max_cost, fix_start_and_goal) {
             x = 0;
             y = 0;
         } else {
-            x = Math.floor((Math.random() * w));//random.nextInt(w);
-            y = Math.floor((Math.random() * h));//random.nextInt(h);
+            x = Math.floor((Math.random() * w));
+            y = Math.floor((Math.random() * h));
         }
         this.setGoal(x, y);
     } while (this.start == this.goal);
 }
 
 Maze.prototype = {
-
-    /*clone: function() {
-        var maze = null;
-        try {
-            maze = (Maze) super.clone();
-        } catch (CloneNotSupportedException e) {
-        }
-
-        maze.w = this.w;
-        maze.h = this.h;
-
-        maze.cells = new MazeCell[this.h][this.w];
-        for (let y = 0; y < this.h; y++) {
-            for (let x = 0; x < this.w; x++) {
-                maze.cells[y][x] = this.cells[y][x].clone();
-            }
-        }
-
-        maze.start = maze.cells[this.start.y][this.start.x];
-        maze.goal = maze.cells[this.goal.y][this.goal.x];
-
-        return maze;
-    },*/
-
+    
     drawMazeOnCanvas: function(canvas) {
         var goal = this.getGoal();
 
@@ -176,35 +153,6 @@ Maze.prototype = {
     setStart: function(x, y) {
         this.setStartCell(this.cells[y][x]);
     },
-
-    /*toString: function() {
-        StringBuilder s = new StringBuilder("W: " + this.w + " H: " + this.h + "\n");
-
-        s.append("   ");
-        for (delete x = 0; x < this.w; x++) {
-            s.append(String.format("%2d ", x + 1));
-        }
-        s.append('\n');
-
-        for (int y = 0; y < this.h; y++) {
-            s.append(" ").append((char)('A' + y)).append(" ");
-            for (int x = 0; x < this.w; x++) {
-                if (this.cells[y][x] == this.goal) {
-                    s.append(String.format("G%d ", this.cells[y][x].getCost()));
-                } else if (this.cells[y][x] == this.start) {
-                    s.append(String.format("S%d ", this.cells[y][x].getCost()));
-                } else if (this.cells[y][x].isBlocked()) {
-                    s.append(" X ");
-                } else if (this.cells[y][x].isPathFlagOn()) {
-                    s.append(" . ");
-                } else {
-                    s.append(String.format(" %d ", this.cells[y][x].getCost()));
-                }
-            }
-            s.append("\n");
-        }
-        return s.toString();
-    },*/
 
     equals: function(maze) {
         if (maze === null)
@@ -466,7 +414,6 @@ DStarLite.prototype = {
             for (let i = this.unblocked_cells.iterator(); i.hasNext();) {
                 let mazeCell = i.next();
                 let node = this.graph[mazeCell.getY()][mazeCell.getX()];
-                //assert (!node.getMazeCell().isBlocked());
 
                 /* There is no need to initialize node. It has already been done on constructor and/or on "blocked_cells" iteration loop. */
                 this.updateNode(node);
@@ -520,16 +467,6 @@ DStarLite.prototype = {
         return this.heuristic.distanceToGoal(maze_cell, this.agent_position.getMazeCell());
     },
 
-    /*getOpenListText: function() {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (BinaryHeapElement e : this.open_list.asSortedList()) {
-            stringBuilder.append(e.toString()).append('\n');
-        }
-
-        return stringBuilder.toString();
-    },*/
-
     isInOpenList: function(maze_cell) {
         return this.open_list.has(this.graph[maze_cell.getY()][maze_cell.getX()]);
     },
@@ -548,12 +485,10 @@ DStarLite.prototype = {
     },
 
     getNodeCost: function(node) {
-        //assert !node.getMazeCell().isBlocked();assert
         return node.getMazeCell().getCost();
     },
 
     computeShortesPath: function() {
-        //try {
         for (let c = 0; ; c++) {
             let node, aux;
 
@@ -615,10 +550,6 @@ DStarLite.prototype = {
 
         }
 
-        /*} catch (e) {
-            console.log(e);
-        }*/
-
         return true;
     },
 
@@ -638,7 +569,6 @@ DStarLite.prototype = {
                 break;
             }
             node.getMazeCell().setNextMazeCell(node_parent.getMazeCell());
-            console.log(node.maze_cell);
         }
     },
 
