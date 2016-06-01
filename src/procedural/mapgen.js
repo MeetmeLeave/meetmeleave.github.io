@@ -1,15 +1,15 @@
 ; (function MapGenerator() {
     'use strict';
-    var p;
-    var resultingMap;
+    let p;
+    let resultingMap;
 
     function generate2dPerlinNoiseMap(xSize, ySize, scale) {
-        var mapArray = [];
+        let mapArray = [];
 
-        for (var i = 1; i < xSize + 1; i++) {
+        for (let i = 1; i < xSize + 1; i++) {
             mapArray[i] = [];
 
-            for (var j = 1; j < ySize + 1; j++) {
+            for (let j = 1; j < ySize + 1; j++) {
                 mapArray[i][j] = p.noise(i * scale, j * scale);
             }
         }
@@ -18,14 +18,14 @@
     }
 
     function generate2dPerlinCircularMap(xSize, ySize, scale) {
-        var mapArray = [];
-        var centerX = xSize / 2;
-        var centerY = ySize / 2;
+        let mapArray = [];
+        let centerX = xSize / 2;
+        let centerY = ySize / 2;
 
-        for (var i = 1; i < xSize + 1; i++) {
+        for (let i = 1; i < xSize + 1; i++) {
             mapArray[i] = [];
 
-            for (var j = 1; j < ySize + 1; j++) {
+            for (let j = 1; j < ySize + 1; j++) {
                 mapArray[i][j] = Math.sqrt(Math.pow(centerX - i, 2) + Math.pow(centerY - j, 2)) / (xSize + ySize) * 2 + p.noise(i * scale, j * scale);
             }
         }
@@ -34,10 +34,10 @@
     }
 
     function visualize2dMap(canvas, mode) {
-        var ctx = canvas.getContext('2d');
-        for (var x = 1; x < resultingMap.length; x++) {
-            for (var y = 1; y < resultingMap[x].length; y++) {
-                var noiseval = resultingMap[x][y];
+        let ctx = canvas.getContext('2d');
+        for (let x = 1; x < resultingMap.length; x++) {
+            for (let y = 1; y < resultingMap[x].length; y++) {
+                let noiseval = resultingMap[x][y];
                 ctx.beginPath();
                 ctx.rect((x * 2), (y * 2), 2, 2);
                 switch (mode) {
@@ -56,28 +56,34 @@
     }
 
     function greyScaledMap(noiseval) {
-        var greyval = Math.round(noiseval * 255);
+        let greyval = Math.round(noiseval * 255);
         return 'rgb(' + greyval + ',' + greyval + ',' + greyval + ')';
     }
 
     function coloredScaleMap(noiseval) {
-        var result;
-
+        let result;
+        
+        // Snow Mountain
         if (noiseval <= 0.3) {
             result = '#F0F8FF';
         }
+        // Mountain
         else if (noiseval > 0.3 && noiseval <= 0.5) {
             result = '#696969';
-        }
+        } 
+        // Forest
         else if (noiseval > 0.5 && noiseval <= 0.75) {
             result = '#228B22';
         }
+        // Plains
         else if (noiseval > 0.75 && noiseval <= 0.9) {
             result = '#00FF00';
         }
+        // Sand 
         else if (noiseval > 0.9 && noiseval <= 1) {
             result = '#FFFF00';
-        }
+        } 
+        // Water
         else {
             result = '#1E90FF';
         }

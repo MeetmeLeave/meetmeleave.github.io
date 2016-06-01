@@ -3,20 +3,25 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Procedural World</title>
+    
+    <style style="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></style>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     
     <script src="lib/alea.js"></script>
     <script src="lib/proc-noise.js"></script>
     <script src="src/procedural/mapgen.js"></script>
+
 </head>
 
 <body>
-    <canvas id="c" width="700" height="700"></canvas>
+    <canvas id="c" width="900" height="900"></canvas>
     <script>
         var c = document.getElementById("c");
         mapgen.config.seed = 1253;
-        mapgen.config.sizex = 350;
-        mapgen.config.sizey = 350;
+        mapgen.config.sizex = 450;
+        mapgen.config.sizey = 450;
         mapgen.config.scale = 0.08;
         mapgen.createRandomIslandMap(); 
         mapgen.vizualizeMap(c, 'color');
