@@ -4,28 +4,95 @@
 <head>
     <meta charset="UTF-8">
     <title>Procedural World</title>
-    
-    <style style="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></style>
+
+    <!--For local dev-->
+    <link rel="stylesheet" type="text/css" href="lib/devlocal/bootstrap.min.css"></link>
+    <script src="lib/devlocal/jquery-2.2.4.min.js"></script>
+    <script src="lib/devlocal/bootstrap.min.js"></script>
+    <!--For local dev-->
+
+    <!--For public page-->
+    <!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+    <!--For public page-->
+
+    <link rel="stylesheet" type="text/css" href="styles/main.css"></link>
     <script src="lib/alea.js"></script>
     <script src="lib/proc-noise.js"></script>
     <script src="src/procedural/mapgen.js"></script>
-
+    <script src="src/renderer.js"></script>
 </head>
-
+<header>
+    <h1 class="head">Procedural generation<h2/>
+</header>
 <body>
-    <canvas id="c" width="900" height="900"></canvas>
-    <script>
-        var c = document.getElementById("c");
-        mapgen.config.seed = 1253;
-        mapgen.config.sizex = 450;
-        mapgen.config.sizey = 450;
-        mapgen.config.scale = 0.08;
-        mapgen.createRandomIslandMap(); 
-        mapgen.vizualizeMap(c, 'color');
-    </script>
-</body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#island" aria-controls="island" role="tab" data-toggle="tab">Island</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#town" aria-controls="town" role="tab" data-toggle="tab">Town/Cave</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#story" aria-controls="story" role="tab" data-toggle="tab">Story Behavior</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="island">
+                        <h3>Map stages will be here</h3>
+                        <canvas id="c" width="700" height="700"></canvas>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade in" id="town">
+                         <h1>NOT IMPLEMENTED</h1>
+    </div>
+    <div role="tabpanel" class="tab-pane fade in" id="story">
+        <h1>NOT IMPLEMENTED</h1>
+    </div>
+    </div>
+    </div>
+    <div class="col-md-4">
+        <h3>World generator</h3>
+        <form>
+            <div class="form-gro">
+                <label for="seed">1. Seed:</label>
+                <input id="seed" type="text" placeholder="1253" value="1253" class="form-control"></input>
+            </div>
+            <div class="form-gro">
+                <label for="formOfMap">2. Map Format:</label>
+                <select id="formOfMap" class="form-control">
+                            <option>Circle</option>
+                        </select>
+            </div>
+            <div class="form-gro">
+                <label for="coeficientsOfMap">3. Map format coeficients:</label>
+                <span id="coeficientsOfMap" class="form-control">Placeholder for coeficients</span>
+            </div>
+            <div class="form-gro">
+                <label for="coeficientsOfPerlin">4. Perlin noise coeficients:</label>
+                <span id="coeficientsOfPerlin" class="form-control">Placeholder for coeficients</span>
+            </div>
+            <div class="form-gro">
+                <label for="noiseNormaliseCount">5. Normalize noise times:</label>
+                <input id="noiseNormaliseCount" type="text" placeholder="3" value="3" class="form-control"></input>
+            </div>
+            <div class="form-gro">
+                <label for="coeficientsOfPerlin">6. Bioms coeficients:</label>
+                <span id="coeficientsOfPerlin" class="form-control">Placeholder for coeficients</span>
+            </div>
+            <div class="form-gro">
+                <label for="noiseNormaliseCount">7. Simulate wind times:</label>
+                <input id="noiseNormaliseCount" type="text" placeholder="3" value="3" class="form-control"></input>
+            </div>
+        </form>
+    </div>
+    </div>
+    </div>
+    </body>
+    <footer>
+    </footer>
 
 </html>

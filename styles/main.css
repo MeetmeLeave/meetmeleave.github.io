@@ -1,0 +1,12 @@
+@font-face {
+    font-family: generatedFont;
+    src: url(fonts/generated-font.ttf);
+}
+
+.head {
+    text-align: center;
+}
+
+body {
+    font-family: generatedFont;
+}
