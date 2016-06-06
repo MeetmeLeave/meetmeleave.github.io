@@ -42,6 +42,7 @@
             for (let j = 1; j < resultingMap[i].length; j++) {
                 if (i <= 5 || j <= 5 || i + 5 >= resultingMap.length || j + 5 >= resultingMap[i].length) {
                     resultingMap[i][j] = 1.5;
+                    continue;
                 }
             }
         }
@@ -136,7 +137,7 @@
             result = '#FFFF00';
         }
         // Water
-        else if (noiseval > 1.1 && noiseval <= 1.3) {
+        else if (noiseval > 1 && noiseval <= 1.1) {
             result = '#1E90FF';
         } else {
             result = '#0000ff';
@@ -157,23 +158,25 @@
             removeBorders: false,
             countOfNoiseNormalsTimes: 0
         },
-        createRandomPerlinMap: function() {
+        createRandomPerlinMap: function () {
             p = new Perlin(this.config.seed);
             resultingMap = generate2dPerlinNoiseMap(this.config.sizex, this.config.sizey, this.config.scale);
             if (this.config.removeBorders) {
                 removeBorders();
             }
+            
             normalizeNoiseMap(this.config.countOfNoiseNormalsTimes);
         },
-        createRandomIslandMap: function() {
+        createRandomIslandMap: function () {
             p = new Perlin(this.config.seed);
             resultingMap = generate2dPerlinCircularMap(this.config.sizex, this.config.sizey, this.config.scale);
             if (this.config.removeBorders) {
                 removeBorders();
             }
+            
             normalizeNoiseMap(this.config.countOfNoiseNormalsTimes);
         },
-        vizualizeMap: function(canvas, mode) {
+        vizualizeMap: function (canvas, mode) {
             visualize2dMap(canvas, mode);
         }
     };
