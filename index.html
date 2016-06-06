@@ -68,25 +68,34 @@
                             <option>Circle</option>
                         </select>
             </div>
-            <div class="form-group">
-                <label for="coeficientsOfMap">3. Map format coeficients:</label>
-                <span id="coeficientsOfMap" class="form-control">Placeholder for coeficients</span>
+            <div class="form-group row">
+                <label class="col-sm-5">3. Clear map borders:</label>
+                <div class="col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                        <input id="makeWater" type="checkbox" checked="true"> Make it to be water
+                    </label>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
-                <label for="coeficientsOfPerlin">4. Perlin noise coeficients:</label>
-                <span id="coeficientsOfPerlin" class="form-control">Placeholder for coeficients</span>
+                <label for="perlinScale">4. Perlin noise scale:</label>
+                <input id="perlinScale" type="text" placeholder="0.04" value="0.08" class="form-control"></input>
             </div>
             <div class="form-group">
                 <label for="noiseNormaliseCount">5. Normalize noise times:</label>
-                <input id="noiseNormaliseCount" type="text" placeholder="3" value="3" class="form-control"></input>
+                <input id="noiseNormaliseCount" type="text" placeholder="2" value="3" class="form-control"></input>
             </div>
             <div class="form-group">
-                <label for="coeficientsOfPerlin">6. Bioms coeficients:</label>
-                <span id="coeficientsOfPerlin" class="form-control">Placeholder for coeficients</span>
+                <label for="coeficientsOfBioms">6. Bioms coeficients:</label>
+                <span id="coeficientsOfBioms" class="form-control">Placeholder for coeficients</span>
             </div>
             <div class="form-group">
                 <label for="noiseNormaliseCount">7. Simulate wind times:</label>
                 <input id="noiseNormaliseCount" type="text" placeholder="3" value="3" class="form-control"></input>
+            </div>
+            <div class="form-group">
+                <input id="generateNewResults" type="button" value="Generate" class="btn" onclick="generateMap();"></input>
             </div>
         </form>
     </div>
