@@ -10,3 +10,16 @@
 body {
     font-family: generatedFont;
 }
+
+#island {
+    position: relative;
+}
+
+.canvas {
+    position: absolute;
+    top: 20;
+}
+
+.canvasTopLayer {
+    opacity: 0.5;
+}
