@@ -57,8 +57,8 @@
                 ctx.beginPath();
                 ctx.rect((x), (y), 1, 1);
                 switch (mode) {
-                    case 'color':
-                        ctx.fillStyle = coloredScaleMap(noiseval);
+                    case 'altitude':
+                        ctx.fillStyle = coloredScaleAltitudeMap(noiseval);
                         break;
 
                     case 'grey':
@@ -76,6 +76,10 @@
         for (let i = 0; i < countOfNoiseNormalsTimes; i++) {
             normalizeNoiseValues();
         }
+    }
+
+    function addNoisyEdges() {
+
     }
 
     // Performs map normalization
@@ -113,34 +117,53 @@
     }
 
     // Uses colors to draw the map
-    function coloredScaleMap(noiseval) {
+    function coloredScaleAltitudeMap(noiseval) {
         let result;
 
-        // Snow Mountain
-        if (noiseval <= 0.3) {
+        // // Snow Mountain
+        // if (noiseval <= 0.3) {
+        //     result = '#F0F8FF';
+        // }
+        // // Mountain
+        // else if (noiseval > 0.3 && noiseval <= 0.5) {
+        //     result = '#696969';
+        // }
+        // // Forest
+        // else if (noiseval > 0.5 && noiseval <= 0.75) {
+        //     result = '#228B22';
+        // }
+        // // Plains
+        // else if (noiseval > 0.75 && noiseval <= 0.9) {
+        //     result = '#00FF00';
+        // }
+        // // Sand 
+        // else if (noiseval > 0.9 && noiseval <= 1) {
+        //     result = '#FFFF00';
+        // }
+        // // Water
+        // else if (noiseval > 1 && noiseval <= 1.1) {
+        //     result = '#1E90FF';
+        // } 
+        // // Deep water
+        // else {
+        //     result = '#0000ff';
+        // }
+
+        // Mountain
+        if (noiseval <= 0.5) {
             result = '#F0F8FF';
         }
-        // Mountain
-        else if (noiseval > 0.3 && noiseval <= 0.5) {
-            result = '#696969';
-        }
-        // Forest
-        else if (noiseval > 0.5 && noiseval <= 0.75) {
-            result = '#228B22';
-        }
-        // Plains
-        else if (noiseval > 0.75 && noiseval <= 0.9) {
-            result = '#00FF00';
-        }
-        // Sand 
-        else if (noiseval > 0.9 && noiseval <= 1) {
-            result = '#FFFF00';
+        // Land
+        else if (noiseval > 0.5 && noiseval <= 1) {
+            result = '#939393';
         }
         // Water
         else if (noiseval > 1 && noiseval <= 1.1) {
-            result = '#1E90FF';
-        } else {
-            result = '#0000ff';
+            result = '#3f3f3f';
+        }
+        // Deep water
+        else {
+            result = '#000000';
         }
 
         return result;
@@ -158,7 +181,7 @@
             removeBorders: false,
             countOfNoiseNormalsTimes: 0
         },
-        createRandomPerlinMap: function() {
+        createRandomPerlinMap: function () {
             p = new Perlin(this.config.seed);
             resultingMap = generate2dPerlinNoiseMap(this.config.sizex, this.config.sizey, this.config.scale);
             if (this.config.removeBorders) {
@@ -167,7 +190,7 @@
 
             normalizeNoiseMap(this.config.countOfNoiseNormalsTimes);
         },
-        createRandomIslandMap: function() {
+        createRandomIslandMap: function () {
             p = new Perlin(this.config.seed);
             resultingMap = generate2dPerlinCircularMap(this.config.sizex, this.config.sizey, this.config.scale);
             if (this.config.removeBorders) {
@@ -176,7 +199,9 @@
 
             normalizeNoiseMap(this.config.countOfNoiseNormalsTimes);
         },
-        vizualizeMap: function(canvas, mode) {
+        generateRainShadowMap: function () {
+        },
+        vizualizeMap: function (canvas, mode) {
             visualize2dMap(canvas, mode);
         }
     };
