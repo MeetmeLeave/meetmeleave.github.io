@@ -55,7 +55,7 @@
             for (let y = 1; y < resultingMap[x].length; y++) {
                 let noiseval = resultingMap[x][y];
                 ctx.beginPath();
-                ctx.rect((x * 2), (y * 2), 2, 2);
+                ctx.rect((x), (y), 1, 1);
                 switch (mode) {
                     case 'color':
                         ctx.fillStyle = coloredScaleMap(noiseval);
@@ -158,25 +158,25 @@
             removeBorders: false,
             countOfNoiseNormalsTimes: 0
         },
-        createRandomPerlinMap: function () {
+        createRandomPerlinMap: function() {
             p = new Perlin(this.config.seed);
             resultingMap = generate2dPerlinNoiseMap(this.config.sizex, this.config.sizey, this.config.scale);
             if (this.config.removeBorders) {
                 removeBorders();
             }
-            
+
             normalizeNoiseMap(this.config.countOfNoiseNormalsTimes);
         },
-        createRandomIslandMap: function () {
+        createRandomIslandMap: function() {
             p = new Perlin(this.config.seed);
             resultingMap = generate2dPerlinCircularMap(this.config.sizex, this.config.sizey, this.config.scale);
             if (this.config.removeBorders) {
                 removeBorders();
             }
-            
+
             normalizeNoiseMap(this.config.countOfNoiseNormalsTimes);
         },
-        vizualizeMap: function (canvas, mode) {
+        vizualizeMap: function(canvas, mode) {
             visualize2dMap(canvas, mode);
         }
     };
