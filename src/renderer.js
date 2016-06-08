@@ -7,15 +7,6 @@ document.onreadystatechange = function() {
 };
 
 function generateMap() {
-    generateAltitudeMap();
-    // generateRivers();
-    // generateHeatMap();
-    // // generateRainShadowMap();
-    // generateMoisture();
-    // generateBiomes();
-}
-
-function generateAltitudeMap() {
     let c = getCanvasById("altitudeCanvas");
 
     mapgen.config.seed = parseInt(document.getElementById('seed').value);

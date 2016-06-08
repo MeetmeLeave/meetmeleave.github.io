@@ -4,21 +4,6 @@
     let p;
     let resultingMap;
 
-    // Generate perlin map - is broken at the moment need to fix it later
-    function generate2dPerlinNoiseMap(xSize, ySize, scale) {
-        let mapArray = [];
-
-        for (let i = 1; i < xSize + 1; i++) {
-            mapArray[i] = [];
-
-            for (let j = 1; j < ySize + 1; j++) {
-                mapArray[i][j] = p.noise(i * scale, j * scale);
-            }
-        }
-
-        return mapArray;
-    }
-
     // The circle determines height values and the noise determines moisture
     function generate2dPerlinCircularMap(xSize, ySize, scale) {
         let mapArray = [];
@@ -110,6 +95,197 @@
 
     }
 
+    // Adds rivers on map
+    function generateRivers() {
+        // let start = pickRiverStartPoint();
+        // let i = start[1];
+        // let j = start[0];
+        // let localMaximum = resultingMap[i][j];
+        // let localMaximumCoordinates = [i, j];
+        // let river = [];
+
+        // let riverFinished = false;
+
+        // while (!riverFinished) {
+        //     let stepPerformed = false;
+        //     i = localMaximumCoordinates[0];
+        //     j = localMaximumCoordinates[1];
+        //     river.push(localMaximumCoordinates);
+
+        //     let topValue = resultingMap[i][j - 1];
+        //     let bottomValue = resultingMap[i][j + 1];
+        //     let leftValue = resultingMap[i - 1][j];
+        //     let rightValue = resultingMap[i + 1][j];
+        //     let topRightValue = resultingMap[i + 1][j - 1];
+        //     let topLeftValue = resultingMap[i - 1][j - 1];
+        //     let bottomRightValue = resultingMap[i + 1][j + 1];
+        //     let bottomLeftValue = resultingMap[i - 1][j + 1];
+
+        //     if (topValue > localMaximum) {
+        //         if (topValue >= 1.1) {
+        //             riverFinished = true;
+        //         }
+        //         localMaximum = topValue;
+        //         localMaximumCoordinates = [i, j - 1];
+        //         stepPerformed = true;
+        //     }
+
+        //     if (bottomValue > localMaximum) {
+        //         if (bottomValue >= 1.1) {
+        //             riverFinished = true;
+        //         }
+        //         localMaximum = bottomValue;
+        //         localMaximumCoordinates = [i, j + 1];
+        //         stepPerformed = true;
+        //     }
+
+        //     if (leftValue > localMaximum) {
+        //         if (leftValue >= 1.1) {
+        //             riverFinished = true;
+        //         }
+        //         localMaximum = leftValue;
+        //         localMaximumCoordinates = [i - 1, j];
+        //         stepPerformed = true;
+        //     }
+
+        //     if (rightValue > localMaximum) {
+        //         if (rightValue >= 1.1) {
+        //             riverFinished = true;
+        //         }
+        //         localMaximum = rightValue;
+        //         localMaximumCoordinates = [i + 1, j];
+        //         stepPerformed = true;
+        //     }
+
+        //     if (topRightValue > localMaximum) {
+        //         if (topRightValue >= 1.1) {
+        //             riverFinished = true;
+        //         }
+        //         localMaximum = topRightValue;
+        //         localMaximumCoordinates = [i + 1, j - 1];
+        //         stepPerformed = true;
+        //     }
+
+        //     if (topLeftValue > localMaximum) {
+        //         if (topLeftValue >= 1.1) {
+        //             riverFinished = true;
+        //         }
+        //         localMaximum = topLeftValue;
+        //         localMaximumCoordinates = [i - 1, j - 1];
+        //         stepPerformed = true;
+        //     }
+
+        //     if (bottomRightValue > localMaximum) {
+        //         if (bottomRightValue >= 1.1) {
+        //             riverFinished = true;
+        //         }
+        //         localMaximum = bottomRightValue;
+        //         localMaximumCoordinates = [i + 1, j + 1];
+        //         stepPerformed = true;
+        //     }
+
+        //     if (bottomLeftValue > localMaximum) {
+        //         if (bottomLeftValue >= 1.1) {
+        //             riverFinished = true;
+        //         }
+        //         localMaximum = bottomLeftValue;
+        //         localMaximumCoordinates = [i - 1, j + 1];
+        //         stepPerformed = true;
+        //     }
+
+        //     if (!stepPerformed) {
+        //         riverFinished = true;
+        //     }
+        // }
+
+        // for (let i = 0; i < river.length; i++) {
+        //     resultingMap[river[i][0]][river[i][1]] = 1.1;
+        // }
+
+        let startNode = pickRiverStartPoint();
+        let endNode = pickRiverEndPoint();
+
+        let path = aStar(resultingMap, startNode, endNode);
+
+        for (let i = 0; i < path.length; i++) {
+            resultingMap[path[i][0]][path[i][1]] = 1.1;
+        }
+    }
+
+    function pickRiverEndPoint() {
+        for (let i = 1; i < resultingMap.length; i++) {
+            for (let j = 1; j < resultingMap[i].length; j++) {
+                let noiseval = resultingMap[i][j];
+
+                if (i <= 5 || j <= 5 || i + 5 >= resultingMap.length || j + 5 >= resultingMap[i].length) {
+                    continue;
+                }
+
+                if (noiseval < 1.1) {
+                    continue;
+                }
+
+                //let currentValue = resultingMap[i][j];
+                let topValue = resultingMap[i][j - 1];
+                let bottomValue = resultingMap[i][j + 1];
+                let leftValue = resultingMap[i - 1][j];
+                let rightValue = resultingMap[i + 1][j];
+                let topRightValue = resultingMap[i + 1][j - 1];
+                let topLeftValue = resultingMap[i - 1][j - 1];
+                let bottomRightValue = resultingMap[i + 1][j + 1];
+                let bottomLeftValue = resultingMap[i - 1][j + 1];
+
+                if (topValue >= 1.1 &&
+                    bottomValue >= 1.1 &&
+                    leftValue >= 1.1 &&
+                    rightValue >= 1.1 &&
+                    topRightValue >= 1.1 &&
+                    topLeftValue >= 1.1 &&
+                    bottomRightValue >= 1.1 &&
+                    bottomLeftValue >= 1.1) {
+                    continue;
+                }
+
+                return [i, j];
+            }
+        }
+    }
+
+    function pickRiverStartPoint() {
+        for (let i = 1; i < resultingMap.length; i++) {
+            for (let j = 1; j < resultingMap[i].length; j++) {
+                let noiseval = resultingMap[i][j];
+
+                if (noiseval > 0.4) {
+                    continue;
+                }
+
+                //let currentValue = resultingMap[i][j];
+                let topValue = resultingMap[i][j - 1];
+                let bottomValue = resultingMap[i][j + 1];
+                let leftValue = resultingMap[i - 1][j];
+                let rightValue = resultingMap[i + 1][j];
+                let topRightValue = resultingMap[i + 1][j - 1];
+                let topLeftValue = resultingMap[i - 1][j - 1];
+                let bottomRightValue = resultingMap[i + 1][j + 1];
+                let bottomLeftValue = resultingMap[i - 1][j + 1];
+
+                if (topValue <= 0.4 &&
+                    bottomValue <= 0.4 &&
+                    leftValue <= 0.4 &&
+                    rightValue <= 0.4 &&
+                    topRightValue <= 0.4 &&
+                    topLeftValue <= 0.4 &&
+                    bottomRightValue <= 0.4 &&
+                    bottomLeftValue <= 0.4) {
+                    continue;
+                }
+
+                return [i, j];
+            }
+        }
+    }
+
     // Draws map in grey shades
     function greyScaledMap(noiseval) {
         let greyval = Math.round(noiseval * 255);
@@ -157,7 +333,7 @@
         else if (noiseval > 0.5 && noiseval <= 1) {
             result = '#939393';
         }
-        // Water
+        // Shallow Water
         else if (noiseval > 1 && noiseval <= 1.1) {
             result = '#3f3f3f';
         }
@@ -181,16 +357,7 @@
             removeBorders: false,
             countOfNoiseNormalsTimes: 0
         },
-        createRandomPerlinMap: function () {
-            p = new Perlin(this.config.seed);
-            resultingMap = generate2dPerlinNoiseMap(this.config.sizex, this.config.sizey, this.config.scale);
-            if (this.config.removeBorders) {
-                removeBorders();
-            }
-
-            normalizeNoiseMap(this.config.countOfNoiseNormalsTimes);
-        },
-        createRandomIslandMap: function () {
+        createRandomIslandMap: function() {
             p = new Perlin(this.config.seed);
             resultingMap = generate2dPerlinCircularMap(this.config.sizex, this.config.sizey, this.config.scale);
             if (this.config.removeBorders) {
@@ -198,10 +365,15 @@
             }
 
             normalizeNoiseMap(this.config.countOfNoiseNormalsTimes);
+
+            generateRivers();
+            // generateHeatMap();
+            // // generateRainShadowMap();
+            // generateMoisture();
+            // generateBiomes();
         },
-        generateRainShadowMap: function () {
-        },
-        vizualizeMap: function (canvas, mode) {
+        generateRainShadowMap: function() {},
+        vizualizeMap: function(canvas, mode) {
             visualize2dMap(canvas, mode);
         }
     };
