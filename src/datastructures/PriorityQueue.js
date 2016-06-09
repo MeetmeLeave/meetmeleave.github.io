@@ -138,6 +138,6 @@ PriorityQueue.prototype = {
     },
 
     empty: function() {
-      return this.heap.length == 0;  
+      return this.heap.length === 0;  
     }
 };

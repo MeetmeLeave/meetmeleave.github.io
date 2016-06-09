@@ -205,10 +205,14 @@
         let startNode = pickRiverStartPoint();
         let endNode = pickRiverEndPoint();
 
-        let path = aStar(resultingMap, startNode, endNode);
+        let path = new aStar(resultingMap, startNode, endNode);
 
         for (let i = 0; i < path.length; i++) {
-            resultingMap[path[i][0]][path[i][1]] = 1.1;
+            let x = path[i].x;
+            let y = path[i].y;
+
+            // Debug
+            resultingMap[x][y] = 15;
         }
     }
 
@@ -340,6 +344,11 @@
         // Deep water
         else {
             result = '#000000';
+        }
+
+        // Debug
+        if(noiseval == 15){
+            result = '#ff0000';
         }
 
         return result;
