@@ -10,10 +10,10 @@
         let centerX = xSize / 2;
         let centerY = ySize / 2;
 
-        for (let i = 1; i < xSize + 1; i++) {
+        for (let i = 0; i < xSize + 1; i++) {
             mapArray[i] = [];
 
-            for (let j = 1; j < ySize + 1; j++) {
+            for (let j = 0; j < ySize + 1; j++) {
                 mapArray[i][j] = Math.sqrt(Math.pow(centerX - i, 2) + Math.pow(centerY - j, 2)) / (xSize + ySize) * 2 + p.noise(i * scale, j * scale);
             }
         }
@@ -23,8 +23,8 @@
 
     // removes 5 lines of values around the map, to become water
     function removeBorders() {
-        for (let i = 1; i < resultingMap.length; i++) {
-            for (let j = 1; j < resultingMap[i].length; j++) {
+        for (let i = 0; i < resultingMap.length; i++) {
+            for (let j = 0; j < resultingMap[i].length; j++) {
                 if (i <= 5 || j <= 5 || i + 5 >= resultingMap.length || j + 5 >= resultingMap[i].length) {
                     resultingMap[i][j] = 1.5;
                     continue;
@@ -36,8 +36,8 @@
     // draws map on the canvas using link to the canvas obj
     function visualize2dMap(canvas, mode) {
         let ctx = canvas.getContext('2d');
-        for (let x = 1; x < resultingMap.length; x++) {
-            for (let y = 1; y < resultingMap[x].length; y++) {
+        for (let x = 0; x < resultingMap.length; x++) {
+            for (let y = 0; y < resultingMap[x].length; y++) {
                 let noiseval = resultingMap[x][y];
                 ctx.beginPath();
                 ctx.rect((x), (y), 1, 1);
@@ -69,8 +69,8 @@
 
     // Performs map normalization
     function normalizeNoiseValues() {
-        for (let i = 1; i < resultingMap.length; i++) {
-            for (let j = 1; j < resultingMap[i].length; j++) {
+        for (let i = 0; i < resultingMap.length; i++) {
+            for (let j = 0; j < resultingMap[i].length; j++) {
                 if (i <= 5 || j <= 5 || i + 5 >= resultingMap.length || j + 5 >= resultingMap[i].length) {
                     continue;
                 }
@@ -97,113 +97,8 @@
 
     // Adds rivers on map
     function generateRivers() {
-        // let start = pickRiverStartPoint();
-        // let i = start[1];
-        // let j = start[0];
-        // let localMaximum = resultingMap[i][j];
-        // let localMaximumCoordinates = [i, j];
-        // let river = [];
-
-        // let riverFinished = false;
-
-        // while (!riverFinished) {
-        //     let stepPerformed = false;
-        //     i = localMaximumCoordinates[0];
-        //     j = localMaximumCoordinates[1];
-        //     river.push(localMaximumCoordinates);
-
-        //     let topValue = resultingMap[i][j - 1];
-        //     let bottomValue = resultingMap[i][j + 1];
-        //     let leftValue = resultingMap[i - 1][j];
-        //     let rightValue = resultingMap[i + 1][j];
-        //     let topRightValue = resultingMap[i + 1][j - 1];
-        //     let topLeftValue = resultingMap[i - 1][j - 1];
-        //     let bottomRightValue = resultingMap[i + 1][j + 1];
-        //     let bottomLeftValue = resultingMap[i - 1][j + 1];
-
-        //     if (topValue > localMaximum) {
-        //         if (topValue >= 1.1) {
-        //             riverFinished = true;
-        //         }
-        //         localMaximum = topValue;
-        //         localMaximumCoordinates = [i, j - 1];
-        //         stepPerformed = true;
-        //     }
-
-        //     if (bottomValue > localMaximum) {
-        //         if (bottomValue >= 1.1) {
-        //             riverFinished = true;
-        //         }
-        //         localMaximum = bottomValue;
-        //         localMaximumCoordinates = [i, j + 1];
-        //         stepPerformed = true;
-        //     }
-
-        //     if (leftValue > localMaximum) {
-        //         if (leftValue >= 1.1) {
-        //             riverFinished = true;
-        //         }
-        //         localMaximum = leftValue;
-        //         localMaximumCoordinates = [i - 1, j];
-        //         stepPerformed = true;
-        //     }
-
-        //     if (rightValue > localMaximum) {
-        //         if (rightValue >= 1.1) {
-        //             riverFinished = true;
-        //         }
-        //         localMaximum = rightValue;
-        //         localMaximumCoordinates = [i + 1, j];
-        //         stepPerformed = true;
-        //     }
-
-        //     if (topRightValue > localMaximum) {
-        //         if (topRightValue >= 1.1) {
-        //             riverFinished = true;
-        //         }
-        //         localMaximum = topRightValue;
-        //         localMaximumCoordinates = [i + 1, j - 1];
-        //         stepPerformed = true;
-        //     }
-
-        //     if (topLeftValue > localMaximum) {
-        //         if (topLeftValue >= 1.1) {
-        //             riverFinished = true;
-        //         }
-        //         localMaximum = topLeftValue;
-        //         localMaximumCoordinates = [i - 1, j - 1];
-        //         stepPerformed = true;
-        //     }
-
-        //     if (bottomRightValue > localMaximum) {
-        //         if (bottomRightValue >= 1.1) {
-        //             riverFinished = true;
-        //         }
-        //         localMaximum = bottomRightValue;
-        //         localMaximumCoordinates = [i + 1, j + 1];
-        //         stepPerformed = true;
-        //     }
-
-        //     if (bottomLeftValue > localMaximum) {
-        //         if (bottomLeftValue >= 1.1) {
-        //             riverFinished = true;
-        //         }
-        //         localMaximum = bottomLeftValue;
-        //         localMaximumCoordinates = [i - 1, j + 1];
-        //         stepPerformed = true;
-        //     }
-
-        //     if (!stepPerformed) {
-        //         riverFinished = true;
-        //     }
-        // }
-
-        // for (let i = 0; i < river.length; i++) {
-        //     resultingMap[river[i][0]][river[i][1]] = 1.1;
-        // }
-
-        let startNode = pickRiverStartPoint();
         let endNode = pickRiverEndPoint();
+        let startNode = pickRiverStartPoint();
 
         let path = new aStar(resultingMap, startNode, endNode); //, 0.4);
 
@@ -217,8 +112,8 @@
     }
 
     function pickRiverEndPoint() {
-        for (let i = 1; i < resultingMap.length; i++) {
-            for (let j = 1; j < resultingMap[i].length; j++) {
+        for (let i = 0; i < resultingMap.length; i++) {
+            for (let j = 0; j < resultingMap[i].length; j++) {
                 let noiseval = resultingMap[i][j];
 
                 if (i <= 5 || j <= 5 || i + 5 >= resultingMap.length || j + 5 >= resultingMap[i].length) {
@@ -256,11 +151,11 @@
     }
 
     function pickRiverStartPoint() {
-        for (let i = 1; i < resultingMap.length; i++) {
-            for (let j = 1; j < resultingMap[i].length; j++) {
+        for (let i = 0; i < resultingMap.length; i++) {
+            for (let j = 0; j < resultingMap[i].length; j++) {
                 let noiseval = resultingMap[i][j];
 
-                if (noiseval > 0.4) {
+                if (noiseval > 0.5) {
                     continue;
                 }
 
@@ -274,14 +169,14 @@
                 let bottomRightValue = resultingMap[i + 1][j + 1];
                 let bottomLeftValue = resultingMap[i - 1][j + 1];
 
-                if (topValue <= 0.4 &&
-                    bottomValue <= 0.4 &&
-                    leftValue <= 0.4 &&
-                    rightValue <= 0.4 &&
-                    topRightValue <= 0.4 &&
-                    topLeftValue <= 0.4 &&
-                    bottomRightValue <= 0.4 &&
-                    bottomLeftValue <= 0.4) {
+                if (topValue <= 0.5 &&
+                    bottomValue <= 0.5 &&
+                    leftValue <= 0.5 &&
+                    rightValue <= 0.5 &&
+                    topRightValue <= 0.5 &&
+                    topLeftValue <= 0.5 &&
+                    bottomRightValue <= 0.5 &&
+                    bottomLeftValue <= 0.5) {
                     continue;
                 }
 

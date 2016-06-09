@@ -69,6 +69,15 @@ PriorityQueue.prototype = {
         return false;
     },
 
+    deleteByIndex: function(index) {
+        if (index != -1) {
+            this.heap.splice(index, 1);
+            return true;
+        }
+
+        return false;
+    },
+
     // updates node by its index, by removing it from the heap and pushing it with new priority
     updateByIndex: function(i, data, priority) {
         this.heap.splice(i, 1);
@@ -79,8 +88,7 @@ PriorityQueue.prototype = {
     update: function(data, priority) {
         for (let i = 1; i < this.heap.length; i++) {
             if (this.equals(data, this.heap[i].data)) {
-                this.heap.splice(i, 1);
-                this.push(data, priority);
+                this.updateByIndex(i, data, priority);
             }
         }
     },
@@ -138,7 +146,7 @@ PriorityQueue.prototype = {
 
     // returns true if node i is higher priority than j
     isHigherPriority: function(i, j) {
-        return this.heap[i].priority < this.heap[j].priority;
+        return this.heap[i].priority > this.heap[j].priority;
     },
 
     empty: function() {
