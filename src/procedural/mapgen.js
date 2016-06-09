@@ -205,7 +205,7 @@
         let startNode = pickRiverStartPoint();
         let endNode = pickRiverEndPoint();
 
-        let path = new aStar(resultingMap, startNode, endNode);
+        let path = new aStar(resultingMap, startNode, endNode); //, 0.4);
 
         for (let i = 0; i < path.length; i++) {
             let x = path[i].x;
@@ -347,7 +347,7 @@
         }
 
         // Debug
-        if(noiseval == 15){
+        if (noiseval == 15) {
             result = '#ff0000';
         }
 

@@ -16,28 +16,36 @@
 <script>
     let canvas = document.getElementById("c");
     let map = [
-        [0,1,1,0],
-        [0,0,0,1],
-        [1,1,0,1]
-    ]; 
-    let start = [0,0];
-    let end = [2,2];
-    let path = new aStar(map,start,end);
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, -1, -1, -1, -1, -1, -1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, -1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, -1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, -1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, -1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, -1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, -1, 0],
+        [0, 0, -1, -1, -1, -1, -1, -1, -1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    let start = [9, 0];
+    let end = [0, 9];
+    let path = new aStar(map, start, end); //, -1);
     drawPath();
 
-    function drawPath(){
+    function drawPath() {
         let ctx = canvas.getContext('2d');
-        for(let i=0; i<map.length;i++){
-            for(let j=0;j<map[i].length;j++){
+        for (let i = 0; i < map.length; i++) {
+            for (let j = 0; j < map[i].length; j++) {
+                let val = map[i][j];
                 ctx.beginPath();
-                ctx.rect((x)+5, (y)+5, 5, 5);
-                switch (mode) {
-                    case '0':
-                        ctx.fillStyle = '#000000';
+                ctx.rect((i) * 50, (j) * 50, 50, 50);
+                switch (val) {
+                    case 0:
+                        ctx.fillStyle = '#4d4dff';
                         break;
 
-                    case '1':
-                        ctx.fillStyle = '#3f3f3f';
+                    case -1:
+                        ctx.fillStyle = '#4dff4d';
                         break;
                 }
 
@@ -45,15 +53,14 @@
             }
         }
 
-        for(let i=0; i<path.length; i++){
+        for (let i = 0; i < path.length; i++) {
             ctx.beginPath();
-            ctx.rect((path[i].x)+5, (path[i].y)+5, 5, 5);
-            ctx.fillStyle = '#ff0000';
+            ctx.rect((path[i].x) * 50, (path[i].y) * 50, 50, 50);
+            ctx.fillStyle = '#b30000';
 
             ctx.fill();
         }
     }
-   
 </script>
 
 </html>

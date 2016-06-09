@@ -50,7 +50,11 @@ PriorityQueue.prototype = {
 
     // returns top prio
     peekPriority: function() {
-        return this.heap[1].priority;
+        if (this.heap[1] !== undefined) {
+            return this.heap[1].priority;
+        }
+
+        return null;
     },
 
     // removes node from the hea[]
@@ -138,6 +142,6 @@ PriorityQueue.prototype = {
     },
 
     empty: function() {
-      return this.heap.length === 0;  
+        return this.heap.length === 1;
     }
 };
