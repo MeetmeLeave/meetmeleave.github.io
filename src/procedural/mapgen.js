@@ -100,7 +100,7 @@
         let endNode = pickRiverEndPoint();
         let startNode = pickRiverStartPoint();
 
-        let path = new aStar(resultingMap, startNode, endNode); //, 0.4);
+        let path = new aStar(resultingMap, startNode, endNode, 10); //, 0.4);
 
         for (let i = 0; i < path.length; i++) {
             let x = path[i].x;

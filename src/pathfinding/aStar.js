@@ -1,9 +1,9 @@
 'use strict';
 
-function aStarNode(x, y, cost) {
+function aStarNode(x, y, cost, costMultiplier) {
     this.x = x;
     this.y = y;
-    this.cost = parseInt(cost * 10);
+    this.cost = parseInt(cost * costMultiplier);
 
     this.g = 0;
     this.h = 0;
@@ -11,14 +11,14 @@ function aStarNode(x, y, cost) {
     this.parent = null;
 }
 
-aStarNode.prototype.convertToCoordinates = function () {
+aStarNode.prototype.convertToCoordinates = function() {
     return {
         x: this.x,
         y: this.y
     };
 };
 
-aStarNode.prototype.equals = function (node) {
+aStarNode.prototype.equals = function(node) {
     return this.x == node.x && this.y == node.y;
 };
 
@@ -30,11 +30,11 @@ let compare = function aStarCompare(i, j) {
     return this.heap[i].priority < this.heap[j].priority;
 };
 
-function aStar(map, start, goal /*, cantPassVal*/) {
-    //this.cantPassVal = cantPassVal;
+function aStar(map, start, goal, costMultiplier) {
+    this.costMultiplier = costMultiplier;
     this.heuristic = new Heuristic();
-    this.startNode = new aStarNode(start[0], start[1], map[start[0]][start[1]]);
-    this.goalNode = new aStarNode(goal[0], goal[1], map[goal[0]][goal[1]]);
+    this.startNode = new aStarNode(start[0], start[1], map[start[0]][start[1]], this.costMultiplier);
+    this.goalNode = new aStarNode(goal[0], goal[1], map[goal[0]][goal[1]], this.costMultiplier);
 
     this.openList = new PriorityQueue(null, compare, equals);
     this.closedList = new PriorityQueue(null, compare, equals);
@@ -47,18 +47,13 @@ function aStar(map, start, goal /*, cantPassVal*/) {
         let currentNode = this.openList.pop();
 
         if (currentNode.equals(this.goalNode)) {
-            return this.traversePath(currentNode);
+            return this.buildPath(currentNode);
         }
 
-        // let smallestCost;
         let neighbors = this.getNeighbors(currentNode, map);
         for (let j = 0; j < neighbors.length; j++) {
             let neighbor = neighbors[j];
             neighbor.parent = currentNode;
-
-            // if (neighbor.equals(this.goalNode)) {
-            //     return this.traversePath();
-            // }
 
             neighbor.g = currentNode.g + neighbor.cost;
             neighbor.h = this.calculateH(neighbor);
@@ -70,21 +65,17 @@ function aStar(map, start, goal /*, cantPassVal*/) {
             if (openIndex != -1) {
                 if (this.openList.heap[openIndex].priority <= neighbor.f) {
                     continue;
-                }
-                else {
+                } else {
                     this.openList.updateByIndex(openIndex, neighbor, neighbor.f);
                 }
-            }
-            else if (closedIndex != -1) {
+            } else if (closedIndex != -1) {
                 if (this.closedList.heap[closedIndex].priority <= neighbor.f) {
                     continue;
-                }
-                else {
+                } else {
                     this.closedList.updateByIndex(closedIndex, neighbor, neighbor.f);
                     this.openList.push(neighbor, neighbor.f);
                 }
-            }
-            else {
+            } else {
                 this.openList.push(neighbor, neighbor.f);
             }
         }
@@ -93,8 +84,7 @@ function aStar(map, start, goal /*, cantPassVal*/) {
 
         if (closedIndex != -1) {
             this.closedList.updateByIndex(closedIndex, currentNode, currentNode.f);
-        }
-        else {
+        } else {
             this.closedList.push(currentNode, currentNode.f);
         }
     }
@@ -102,15 +92,11 @@ function aStar(map, start, goal /*, cantPassVal*/) {
     return [];
 }
 
-aStar.prototype.calculateH = function (node) {
+aStar.prototype.calculateH = function(node) {
     return this.heuristic.manhattanDistance(node.x, node.y, this.goalNode.x, this.goalNode.y);
 };
 
-// aStar.prototype.canPass = function(node) {
-//     this.cantPassVal <= node.cost;
-// };
-
-aStar.prototype.getNeighbors = function (node, map) {
+aStar.prototype.getNeighbors = function(node, map) {
     let neighbors = [];
 
     let left = node.x - 1;
@@ -119,34 +105,34 @@ aStar.prototype.getNeighbors = function (node, map) {
     let bottom = node.y + 1;
 
     if (left >= 0) {
-        neighbors.push(new aStarNode(left, node.y, map[left][node.y]));
+        neighbors.push(new aStarNode(left, node.y, map[left][node.y], this.costMultiplier));
     }
     if (right < map.length) {
-        neighbors.push(new aStarNode(right, node.y, map[right][node.y]));
+        neighbors.push(new aStarNode(right, node.y, map[right][node.y], this.costMultiplier));
     }
     if (top >= 0) {
-        neighbors.push(new aStarNode(node.x, top, map[node.x][top]));
+        neighbors.push(new aStarNode(node.x, top, map[node.x][top], this.costMultiplier));
     }
     if (bottom < map[node.x].length) {
-        neighbors.push(new aStarNode(node.x, bottom, map[node.x][bottom]));
+        neighbors.push(new aStarNode(node.x, bottom, map[node.x][bottom], this.costMultiplier));
     }
     if (left >= 0 && top >= 0) {
-        neighbors.push(new aStarNode(left, top, map[left][top]));
+        neighbors.push(new aStarNode(left, top, map[left][top], this.costMultiplier));
     }
     if (right < map.length && bottom < map[node.x].length) {
-        neighbors.push(new aStarNode(right, bottom, map[right][bottom]));
+        neighbors.push(new aStarNode(right, bottom, map[right][bottom], this.costMultiplier));
     }
     if (left >= 0 && bottom < map[node.x].length) {
-        neighbors.push(new aStarNode(left, bottom, map[left][bottom]));
+        neighbors.push(new aStarNode(left, bottom, map[left][bottom], this.costMultiplier));
     }
     if (right < map.length && top >= 0) {
-        neighbors.push(new aStarNode(right, top, map[right][top]));
+        neighbors.push(new aStarNode(right, top, map[right][top], this.costMultiplier));
     }
 
     return neighbors;
 };
 
-aStar.prototype.traversePath = function (node) {
+aStar.prototype.buildPath = function(node) {
     let path = [];
 
     let goal = node;
