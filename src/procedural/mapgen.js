@@ -261,7 +261,7 @@
             removeBorders: false,
             countOfNoiseNormalsTimes: 0
         },
-        createRandomIslandMap: function() {
+        createRandomIslandMap: function () {
             p = new Perlin(this.config.seed);
             resultingMap = generate2dPerlinCircularMap(this.config.sizex, this.config.sizey, this.config.scale);
             if (this.config.removeBorders) {
@@ -276,8 +276,8 @@
             // generateMoisture();
             // generateBiomes();
         },
-        generateRainShadowMap: function() {},
-        vizualizeMap: function(canvas, mode) {
+        generateRainShadowMap: function () { },
+        vizualizeMap: function (canvas, mode) {
             visualize2dMap(canvas, mode);
         }
     };
