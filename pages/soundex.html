@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Soundex</title>
+    <script src="../src/phonetic/soundex.js"></script>
+</head>
+
+<body>
+    <script>
+        function encode() {
+            let soundex = new AmericanSoundex();
+            let textToEncode = document.getElementById('textToEncode').value;
+            let resultOfEncoding = soundex.encodeText(textToEncode);
+            let para = document.createElement("p");
+            let node = document.createTextNode(textToEncode + ' : ' + resultOfEncoding);
+            para.appendChild(node);
+
+            let element = document.getElementById("result");
+            element.appendChild(para);
+        }
+    </script>
+
+    <div>
+        <input id="textToEncode" type="text" />
+        <input type="submit" value="Encode Name" onclick="encode()" />
+        <div id="result"></div>
+    </div>
+</body>
+
+</html>
