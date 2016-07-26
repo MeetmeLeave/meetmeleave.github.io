@@ -72,4 +72,53 @@ class AmericanSoundex {
                 return -1;
         }
     }
+
+    // returns level of difference between soundex codes of 2 words, for more precise comparison
+    calculateDifference(value1, value2) {
+        let result = 0;
+
+        let soundex1 = this.encodeText(value1);
+        let soundex2 = this.encodeText(value2);
+
+        if (soundex1 == soundex2) {
+            result = 4
+        } else {
+            let sub1 = soundex1.substring(1, 4);
+            let sub2 = soundex1.substring(2, 4);
+            let sub3 = soundex1.substring(1, 3);
+            let sub4 = soundex1.substring(1, 2);
+            let sub5 = soundex1.substring(2, 3);
+            let sub6 = soundex1.substring(3, 4);
+
+            if (soundex2.indexOf(sub1) > -1) {
+                result = 3;
+            } else if (soundex2.indexOf(sub2) > -1) {
+                result = 2;
+            } else if (soundex2.indexOf(sub3) > -1) {
+                result = 2;
+            } else {
+                if (soundex2.indexOf(sub4) > -1) {
+                    result += 1;
+                }
+
+                if (soundex2.indexOf(sub5) > -1) {
+                    result += 1;
+                }
+
+                if (soundex2.indexOf(sub6) > -1) {
+                    result += 1;
+                }
+            }
+
+            if (soundex1.substring(0, 1) == soundex2.substring(0, 1)) {
+                result += 1;
+            }
+        }
+
+        return {
+            soundex1: soundex1,
+            soundex2: soundex2,
+            difference: result
+        };
+    }
 }

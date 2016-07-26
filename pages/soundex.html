@@ -20,12 +20,32 @@
             let element = document.getElementById("result");
             element.appendChild(para);
         }
+
+        function compareDifference() {
+            let soundex = new AmericanSoundex();
+            let textToCompare1 = document.getElementById('firstTextToCompare').value;
+            let textToCompare2 = document.getElementById('secondTextToCompare').value;
+            let resultOfEncoding = soundex.calculateDifference(textToCompare1, textToCompare2);
+            let para = document.createElement("p");
+            let node = document.createTextNode(textToCompare1 + ' vs ' + textToCompare2 + ' : ' + resultOfEncoding.soundex1 + ' vs ' + resultOfEncoding.soundex2 + ' : ' + ' = ' + resultOfEncoding.difference);
+            para.appendChild(node);
+
+            let element = document.getElementById("resultOfDifference");
+            element.appendChild(para);
+        }
     </script>
 
     <div>
         <input id="textToEncode" type="text" />
         <input type="submit" value="Encode Name" onclick="encode()" />
         <div id="result"></div>
+    </div>
+    </br>
+    <div>
+        <input id="firstTextToCompare" type="text" />
+        <input id="secondTextToCompare" type="text" />
+        <input type="submit" value="Compare Encoding" onclick="compareDifference()" />
+        <div id="resultOfDifference"></div>
     </div>
 </body>
 
