@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Voronoi Diagram</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.7/d3.min.js"></script>
+	<script src="../lib/alea.js"></script>
+	<script src="../src/procedural/voronoi.svg.js"></script>
+	<style>
+		.links {
+			stroke: #000;
+			stroke-opacity: 0.2;
+		}
+		
+		.polygons {
+			fill: none;
+			stroke: #000;
+		}
+		
+		.polygons:first-child {
+			fill: #f00;
+		}
+		
+		.sites {
+			fill: #000;
+			stroke: #fff;
+		}
+		
+		.sites:first-child {
+			fill: #fff;
+		}
+	</style>
+</head>
+
+<body>
+	<svg width="1024" height="768">
+	</svg>
+	<script>
+        start(2678);
+	</script>
+</body>
+
+</html>
