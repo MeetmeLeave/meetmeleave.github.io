@@ -7,7 +7,7 @@ function start(seed) {
     window.width = +svg.attr("width");
     window.height = +svg.attr("height");
 
-    window.sites = d3.range(300)
+    window.sites = d3.range(245)
         .map(function (d) {
             return [window.alea_rand() * width, window.alea_rand() * height];
         });
