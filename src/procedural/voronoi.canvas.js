@@ -7,9 +7,9 @@ function start(seed) {
     window.width = canvas.width;
     window.height = canvas.height;
     window.minVal = -1;
-    window.maxVal = 401;
+    window.maxVal = 801;
 
-    window.sites = d3.range(250)
+    window.sites = d3.range(400)
         .map(function (d) {
             return [window.alea_rand() * width, window.alea_rand() * height];
         });
