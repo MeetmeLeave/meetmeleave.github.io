@@ -36,7 +36,7 @@ function relax(points) {
         return distance(point, centroids[i]) < 1;
     });
     sites = points;
-    if (iterations > 2) {
+    if (iterations > 3) {
         // voronoi.extent(null);
         // window.triangles = voronoi.triangles(sites);
         window.links = voronoi.links(sites);
